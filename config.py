@@ -8,3 +8,6 @@ proxy = 'https://103.35.64.12:3128'
 
 # bot сохранит файл .torrent по этому пути. Далее файл заберет QbitTorrent автоматически
 torrent_path = 'tmp_torrent/tmp.torrent'
+
+# id чата, в который бот будет отправлять уведомления
+chat_id = '11111111'
