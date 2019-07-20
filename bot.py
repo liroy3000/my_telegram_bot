@@ -2,6 +2,7 @@
 import telebot
 import config
 import func
+import re
 
 telebot.apihelper.proxy = {'https': config.proxy}
 bot = telebot.TeleBot(config.token)
@@ -11,10 +12,18 @@ bot = telebot.TeleBot(config.token)
 def send_ip(message):
 	bot.send_message(message.chat.id, func.show_ip())
 
+# Поставить торрент на загрузку
+@bot.message_handler(content_types=['document'])
+def downoal_torrent(message):
+	if re.findall(r'torrent$', message.document.file_name):
+		file_info = bot.get_file(message.document.file_id)
+		download_file = bot.download_file(file_info.file_path)
+		with open(config.torrent_path, 'wb') as new_file:
+			new_file.write(download_file)
+		bot.send_message(message.chat.id, 'Файл добавлен к загрузке')
 
-
-
-
+	else:
+		bot.send_message(message.chat.id, 'Мне нужен файл в формате .torrent') 
 
 
 
