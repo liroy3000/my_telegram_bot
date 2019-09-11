@@ -4,7 +4,9 @@ import config
 import func
 import re
 
-telebot.apihelper.proxy = {'https': config.proxy}
+proxy_server = func.get_proxy_list('HTTPS')[0]
+proxy_server ='https://' + proxy_server['address'] + ':' + proxy_server['port']
+telebot.apihelper.proxy = {'https': proxy_server}
 bot = telebot.TeleBot(config.token)
 
 # Получить ip домашнего компьютера (на котором работает бот)
