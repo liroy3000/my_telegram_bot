@@ -3,6 +3,7 @@ import telebot
 import config
 import func
 import re
+from os import system
 
 proxy_server = func.get_proxy_list('HTTPS')[0]
 proxy_server ='https://' + proxy_server['address'] + ':' + proxy_server['port']
@@ -27,7 +28,11 @@ def downoal_torrent(message):
 	else:
 		bot.send_message(message.chat.id, 'Мне нужен файл в формате .torrent') 
 
-
+# Команда выключения компьютера
+@bot.message_handler(commands=['off'])
+def power_off(message):
+	bot.send_message(message.chat.id, 'Компьютер будет выключен!') 
+	system('shutdown -s')
 
 
 if __name__ == '__main__':
