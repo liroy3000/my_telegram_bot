@@ -93,11 +93,19 @@ def torrent(arg):
         except:
             return "Произошла ошибка во время остановки QBitTorrent"
 
+def minidlna(arg):
+    if arg == "restart":
+        try:
+            subprocess.run(['sudo', 'systemctl', 'restart', 'minidlna.service'])
+            return "Медиасервер перезапущен."
+        except:
+            return "Произошла ошибка во время перезапуска minidlna."
+
 def get_torrents(url):
     try:
         torrents_list = get(url + "/api/v2/sync/maindata?rid=0&lz6kxcul").json()
     except Exception as e:
-        return "Похоже, QBitTorrent остановлен. Проверьте статус с помощью /torrent_status" 
+        return "Похоже, QBitTorrent остановлен. Проверьте статус с помощью /torrent_status"
     result = "Torrents:\n------\n"
     for torrent in torrents_list["torrents"]:
         result = result + torrents_list["torrents"][torrent]["name"] + "\nProgress: " + str(round(torrents_list["torrents"][torrent]["progress"]*100, 2)) + "%\n------\n"

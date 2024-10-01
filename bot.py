@@ -38,7 +38,8 @@ def create_keyboard():
     button_t_e = types.KeyboardButton('/torrent_start')
     button_t_show = types.KeyboardButton('/show_torrents')
     button_space = types.KeyboardButton('/space')
-    keyboard.add(button_id, button_ip, button_off, button_t_s, button_t_d, button_t_e, button_t_show, button_space)
+    button_media_srv_rest = types.KeyboardButton('/mediasrv-restart')
+    keyboard.add(button_id, button_ip, button_off, button_t_s, button_t_d, button_t_e, button_t_show, button_space, button_media_srv_rest)
     return keyboard
 
 
@@ -122,6 +123,12 @@ def disk_space(message):
         disk = func.get_disk_usage(mount)
         output = output + "Использовано: " + disk["used"] + " Gb (" + disk["percent"] + " %)\nСвободно: " + disk["free"] + " Gb\nВсего: " + disk["total"] + " Gb\n"
     bot.reply_to(message, output, reply_markup=create_keyboard())
+
+@bot.message_handler(commands=['mediasrv-restart'])
+def power_off(message):
+    if func.check_user(bot, message, config.enabled_users) == False:
+        return
+    bot.send_message(message.chat.id, func.minidlna("restart"), reply_markup=create_keyboard())
 
 if __name__ == '__main__':
     bot.polling(none_stop=True)
