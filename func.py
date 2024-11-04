@@ -108,7 +108,7 @@ def get_torrents(url):
         return "Похоже, QBitTorrent остановлен. Проверьте статус с помощью /torrent_status"
     result = "Torrents:\n------\n"
     for torrent in torrents_list["torrents"]:
-        result = result + torrents_list["torrents"][torrent]["name"] + "\nProgress: " + str(round(torrents_list["torrents"][torrent]["progress"]*100, 2)) + "%\n------\n"
+        result = result + torrents_list["torrents"][torrent]["name"] + "\nProgress: " + str(round(torrents_list["torrents"][torrent]["progress"]*100, 2)) + "%\nDownload speed: " + str(round(torrents_list["torrents"][torrent]["dlspeed"] / 1024 / 1024, 2)) + " Mb/s\nSize: " + str(round(torrents_list["torrents"][torrent]["size"] / 1073741824, 2)) + " Gb\n------\n"
     return result
 
 def get_disk_usage(path):
